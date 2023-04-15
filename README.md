@@ -1,11 +1,11 @@
-# Discord Message Extractor
+# Discord Messages Extractor
 
 Simple HTTP service, for extracting messages from Discord server.
 
 ### Usage
 ```bash
-> go build main.go
-> ./main -token DISCORD_BOT_TOKEN
+> go build dme.go
+> ./dme -token DISCORD_BOT_TOKEN
 ```
 
 ```bash
