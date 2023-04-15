@@ -9,5 +9,5 @@ Simple HTTP service, for extracting messages from Discord server.
 ```
 
 ```bash
-> curl localhost:8080?channelId=CHANNEL_ID&limit=10 
+> curl http://localhost:8080?channelId=CHANNEL_ID&limit=10 
 ```
