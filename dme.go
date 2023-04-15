@@ -29,31 +29,27 @@ func main() {
 
 		channelID := r.URL.Query().Get("channelId")
 		if channelID == "" {
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprint(w, "{\"error\": \"missing query param: channelId\"}")
+			respondError(w, "missing query param: channelId", http.StatusBadRequest)
 			return
 		}
 
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprint(w, "{\"error\": \"missing or malformed query param: limit\"}")
+			respondError(w, "missing or malformed query param: limit", http.StatusBadRequest)
 			return
 		}
 
 		messages, err := dg.ChannelMessages(channelID, limit, "", "", "")
 		if err != nil {
 			log.Printf("error while getting channel messages: %v\n", err)
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprint(w, "{\"error\": \"Internal server error\"}")
+			respondError(w, "Internal server error", http.StatusBadRequest)
 			return
 		}
 
 		json, err := json.Marshal(messages)
 		if err != nil {
 			log.Printf("error while marshalling json: %v\n", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprint(w, "{\"error\": \"Internal server error\"}")
+			respondError(w, "Internal server error", http.StatusBadRequest)
 			return
 		}
 
@@ -63,4 +59,9 @@ func main() {
 
 	log.Println("listening on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func respondError(w http.ResponseWriter, msg string, status uint16) {
+	w.WriteHeader(http.StatusInternalServerError)
+	fmt.Fprintf(w, "{\"error\": \"%s\"}", msg)
 }
