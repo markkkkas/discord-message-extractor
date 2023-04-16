@@ -61,7 +61,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func respondError(w http.ResponseWriter, msg string, status uint16) {
-	w.WriteHeader(http.StatusInternalServerError)
+func respondError(w http.ResponseWriter, msg string, status int) {
+	w.WriteHeader(status)
 	fmt.Fprintf(w, "{\"error\": \"%s\"}", msg)
 }
