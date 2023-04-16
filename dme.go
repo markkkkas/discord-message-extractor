@@ -42,14 +42,14 @@ func main() {
 		messages, err := dg.ChannelMessages(channelID, limit, "", "", "")
 		if err != nil {
 			log.Printf("error while getting channel messages: %v\n", err)
-			respondError(w, "Internal server error", http.StatusBadRequest)
+			respondError(w, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
 		json, err := json.Marshal(messages)
 		if err != nil {
 			log.Printf("error while marshalling json: %v\n", err)
-			respondError(w, "Internal server error", http.StatusBadRequest)
+			respondError(w, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
